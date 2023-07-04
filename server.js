@@ -1,9 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
-require('dotenv').config();
 const cors = require('cors');
-
-app.use(cors());
+require('dotenv').config();
 
 // Import routes
 const adminRoutes = require('./routes/adminRoutes');
@@ -14,15 +12,18 @@ const authentication = require('./middleware/authentication');
 const app = express();
 
 // Connect to the database
-mongoose.connect(process.env.DB_URL, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
+mongoose
+  .connect(process.env.DB_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => console.log('Connected to the database'))
   .catch((error) => console.error('Database connection error:', error));
-  
 
 app.use(express.json());
+
+// Enable CORS for all routes
+app.use(cors());
 
 // Define routes
 app.use('/admin', adminRoutes);
