@@ -1,36 +1,35 @@
 const Notification = require('../models/Notification');
 
-// Example of a Notification controller function
+// Retrieve Object data from the database
+
 const getNotification = (req, res) => {
-  // Logic for retrieving Notification data from the database
-  // Example:
+
   Notification.find({})
     .then((Notifications) => {
       res.json(Notifications);
-      console.log(Notifications);
     })
     .catch((error) => {
-      console.error('Error retrieving Notification data:', error);
       res.status(500).json({ error: 'Error retrieving Notification data' });
     });
 };
+
+// Create a new Object
 
 const addNotification = async (req, res) => {
   try {
     const data = req.body;
 
-    // Create a new member object
     const newNotification = new Notification(data);
 
-    // Save the new member to the database
     const savedNotification = await newNotification.save();
     res.status(201).json(savedNotification);
 
   } catch (error) {
-    console.error('Error adding Notification:', error);
     res.status(500).json({ error: 'Server error' });
   }
 }
+
+// Update the Object
 
 const updateNotification = async (req, res) => {
   try {
@@ -44,10 +43,11 @@ const updateNotification = async (req, res) => {
       })
 
   } catch (error) {
-    console.error('Error updating Notification:', error);
     res.status(500).json({ error: 'An error occurred while updating the Notification' });
   }
 }
+
+// export all functions
 
 module.exports = {
   getNotification,

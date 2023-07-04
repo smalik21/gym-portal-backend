@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 // Define the Admin schema
 const adminSchema = new mongoose.Schema({
+
   name: { type: String, required: true },
   username: { type: String, required: true },
   password: { type: String, required: true },
@@ -10,8 +11,8 @@ const adminSchema = new mongoose.Schema({
     email: { type: String }
   },
   acc_status: { type: String, required: true, default: 'active' },
-  acc_type: { type: String, required: true, default: 'normal'}
-  // Other admin fields
+  acc_type: { type: String, required: true, default: 'normal' }
+
 });
 
 // Create the Admin model

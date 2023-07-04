@@ -1,62 +1,68 @@
 const bcrypt = require('bcryptjs');
 const Member = require('../models/Member');
 
-// Example of a member controller function
+// Retrieve Objects from the database
+
 const getMembers = (req, res) => {
-  // Logic for retrieving members data from the database
-  // Example:
+
   Member.find({})
     .then((members) => {
       res.json(members);
-      console.log(members);
     })
     .catch((error) => {
-      console.error('Error retrieving members data:', error);
       res.status(500).json({ error: 'Error retrieving members data' });
     });
 };
 
+// Retrieve Object data from the database
+
 const getMember = (req, res) => {
-  // Logic for retrieving members data from the database
+
+  // Retreive object id
   const id = req.params.id;
-  console.log("Request:", req.params);
+
   Member.findOne({ _id: id })
     .then((member) => {
       res.json(member);
-      console.log("Account Details:", member);
     })
     .catch((error) => {
-      console.error('Error retrieving member data:', error);
       res.status(500).json({ error: 'Error retrieving member data' });
     });
 };
 
+// Create a new Object
+
 const addMember = async (req, res) => {
   try {
+
+    // Retreive new object data
     const data = req.body;
 
     // Hash the password using bcrypt
     const hashedPassword = await bcrypt.hash(data.password, 10);
 
-    // Create a new member object with the hashed password
+    // Create a new object with the hashed password
     const newMember = new Member({ ...data, password: hashedPassword });
 
-    // Save the new member to the database
+    // Save the new object to the database
     const savedMember = await newMember.save();
     res.status(201).json(savedMember);
 
   } catch (error) {
-    console.error('Error adding member:', error);
     res.status(500).json({ error: 'Server error' });
   }
 }
 
+// Update the Object
+
 const updateMember = async (req, res) => {
   try {
 
+    // Retreive the object id and update data
     const memberId = req.params.id;
     const updatedData = req.body;
 
+    // Hash Password only if received data contains a password field
     if (updatedData.password) {
       // Hash the updated password using bcrypt
       const hashedPassword = await bcrypt.hash(updatedData.password, 10);
@@ -71,31 +77,39 @@ const updateMember = async (req, res) => {
       });
 
   } catch (error) {
-    console.error('Error updating member:', error);
     res.status(500).json({ error: 'An error occurred while updating the member' });
   }
 }
 
+// Update an Object
+
 const updateNotification = async (req, res) => {
   try {
 
+    // Retreive the member id and new notification
     const memberId = req.params.id;
     const notification = req.body.notification;
 
-      const member = await Member.findById(memberId);
-      member.notifications.push(notification);
-      await member.save();
-      res.json({ message: 'Notifications updated successfully' });
-    
+    // Retreive the member using member id
+    const member = await Member.findById(memberId);
+    // Push new Notification in the existing array
+    member.notifications.push(notification);
+    // Save the member
+    await member.save();
+    res.json({ message: 'Notifications updated successfully' });
+
 
   } catch (error) {
-    console.error('Error updating notifications:', error);
     res.status(500).json({ error: 'An error occurred while updating the notifications' });
   }
 }
 
+// Delete an Object
+
 const deleteMember = async (req, res) => {
   try {
+
+    // Retreive object id
     const memberId = req.params.id;
 
     await Member.deleteOne({ _id: memberId })
@@ -104,10 +118,11 @@ const deleteMember = async (req, res) => {
       })
 
   } catch (error) {
-    console.error('Error deleting member:', error);
     res.status(500).json({ error: 'An error occurred while deleting the member' });
   }
 }
+
+// export all functions
 
 module.exports = {
   getMembers,

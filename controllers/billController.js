@@ -1,59 +1,63 @@
 const Bill = require('../models/Bill');
 
-// Example of a Bill controller function
+// Retrieve Objects from the database
+
 const getBills = (req, res) => {
-  // Logic for retrieving Bill data from the database
-  // Example:
+
   Bill.find({})
     .then((bills) => {
       res.json(bills);
-      console.log(bills);
     })
     .catch((error) => {
-      console.error('Error retrieving Bill data:', error);
       res.status(500).json({ error: 'Error retrieving Bill data' });
     });
 };
+
+// Retrieve Object data from the database
 
 const getBill = (req, res) => {
-  // Logic for retrieving Bill data from the database
-  // Example:
+
+  // Retreive object id
   const id = req.params.id;
 
-  Bill.find({ memberId: id})
+  Bill.find({ memberId: id })
     .then((bills) => {
       res.json(bills);
-      console.log(bills);
     })
     .catch((error) => {
-      console.error('Error retrieving Bill data:', error);
       res.status(500).json({ error: 'Error retrieving Bill data' });
     });
 };
+
+// Create a new Object
 
 const addBill = async (req, res) => {
   try {
+
+    // Retreive new object data
     const data = req.body;
 
-    // Create a new member object
+    // Create a new object
     const newBill = new Bill(data);
 
-    // Save the new member to the database
+    // Save the new object to the database
     const savedBill = await newBill.save();
     res.status(201).json(savedBill);
 
   } catch (error) {
-    console.error('Error adding Bill:', error);
     res.status(500).json({ error: 'Server error' });
   }
 }
 
+// Update the Object
+
 const updateBill = async (req, res) => {
   try {
 
+    // Retreive the object id and update data
     const billId = req.params.id;
     const updatedData = req.body;
-    console.log("Updated", updatedData);
+
 
     await Bill.updateOne({ _id: billId }, updatedData)
       .then(() => {
@@ -61,13 +65,16 @@ const updateBill = async (req, res) => {
       })
 
   } catch (error) {
-    console.error('Error updating member:', error);
     res.status(500).json({ error: 'An error occurred while updating the Bill' });
   }
 }
 
+// Delete an Object
+
 const deleteBill = async (req, res) => {
   try {
+
+    // Retreive object id
     const billId = req.params.id;
 
     await Bill.deleteOne({ _id: billId })
@@ -76,10 +83,11 @@ const deleteBill = async (req, res) => {
       })
 
   } catch (error) {
-    console.error('Error deleting Bill:', error);
     res.status(500).json({ error: 'An error occurred while deleting the Bill' });
   }
 }
+
+// export all functions
 
 module.exports = {
   getBills,

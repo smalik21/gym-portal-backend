@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema({
     email: { type: String }
   },
   acc_status: { type: String, required: true, default: 'active' }
-  // Other user fields
+
 });
 
 // Create the User model

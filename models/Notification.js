@@ -1,14 +1,13 @@
 const mongoose = require('mongoose');
 
-// Define the Package schema
+// Define the Notification schema
 const notificationSchema = new mongoose.Schema({
   customMessage: { type: String, required: true },
   paymentReminder: { type: String, required: true },
-  
-  // Other Package fields
+
 });
 
-// Create the Package model
+// Create the Notification model
 const Notification = mongoose.model('Notification', notificationSchema);
 
 module.exports = Notification;

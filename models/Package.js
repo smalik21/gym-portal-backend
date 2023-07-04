@@ -6,7 +6,7 @@ const packageSchema = new mongoose.Schema({
   tagLine: { type: String },
   price: { type: Number, required: true },
   features: { type: Array, default: [] },
-  // Other Package fields
+
 });
 
 // Create the Package model

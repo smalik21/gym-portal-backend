@@ -5,10 +5,13 @@ const router = express.Router();
 const userController = require('../controllers/userController');
 
 // Define user routes
-// router.get('/', userController.getUsers);
-// Add more routes as needed
 
+// Get a specific user by ID
 router.get('/user/:id', userController.getUser);
+
+// Update a specific user by ID
 router.put('/user/:id', userController.updateUser);
+
+// Add more routes as needed
 
 module.exports = router;

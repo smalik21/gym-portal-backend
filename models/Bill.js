@@ -8,7 +8,7 @@ const billSchema = new mongoose.Schema({
   extraAmt: { type: Number },
   totalAmt: { type: Number, required: true },
   status: { type: String, required: true, default: 'pending' }
-  // Other Bill fields
+
 });
 
 // Create the Bill model

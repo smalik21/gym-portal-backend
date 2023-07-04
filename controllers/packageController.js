@@ -1,36 +1,36 @@
 const Package = require('../models/Package');
 
-// Example of a Package controller function
+// Retrieve Objects from the database
+
 const getPackages = (req, res) => {
-  // Logic for retrieving Package data from the database
-  // Example:
+
   Package.find({})
     .then((packages) => {
       res.json(packages);
-      console.log(packages);
     })
     .catch((error) => {
-      console.error('Error retrieving Package data:', error);
       res.status(500).json({ error: 'Error retrieving Package data' });
     });
 };
 
+// Create a new Object
+
 const addPackage = async (req, res) => {
   try {
+
     const data = req.body;
 
-    // Create a new member object
     const newPackage = new Package(data);
 
-    // Save the new member to the database
     const savedPackage = await newPackage.save();
     res.status(201).json(savedPackage);
 
   } catch (error) {
-    console.error('Error adding Package:', error);
     res.status(500).json({ error: 'Server error' });
   }
 }
+
+// Update the Object
 
 const updatePackage = async (req, res) => {
   try {
@@ -44,13 +44,15 @@ const updatePackage = async (req, res) => {
       })
 
   } catch (error) {
-    console.error('Error updating package:', error);
     res.status(500).json({ error: 'An error occurred while updating the Package' });
   }
 }
 
+// Delete an Object
+
 const deletePackage = async (req, res) => {
   try {
+
     const packageId = req.params.id;
 
     await Package.deleteOne({ _id: packageId })
@@ -59,10 +61,11 @@ const deletePackage = async (req, res) => {
       })
 
   } catch (error) {
-    console.error('Error deleting Package:', error);
     res.status(500).json({ error: 'An error occurred while deleting the Package' });
   }
 }
+
+// export all functions
 
 module.exports = {
   getPackages,

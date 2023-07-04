@@ -18,7 +18,7 @@ const memberSchema = new mongoose.Schema({
   payment_status: { type: String, default: 'pending' },
   joining_date: { type: String },
   notifications: { type: Array, default: [] }
-  // Other member fields
+
 });
 
 // Create the Member model
